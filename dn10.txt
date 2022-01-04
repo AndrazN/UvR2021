@@ -1,0 +1,134 @@
+1.
+
+
+          .text
+  tabela:  .space 8
+          .align
+          .global __start
+__start:  
+          adr r0, tabela
+          mov r1, #8
+          mov r2, #0xFF
+  zanka:  strb r2, [r0]
+          add r0, r0, #1
+          
+          subs r1, r1, #1
+          bne zanka
+__end:    b __end  
+
+
+2.
+
+
+           .text
+tabela:   .byte 1,100,255,24,88,31,56,192,155,224
+rezultat: .space 2
+          .align
+          .global __start
+__start: 
+          adr r0, tabela
+          mov r1, #10
+          mov r2, #0
+zanka:    ldrb r3, [r0]
+          add r2, r2, r3
+          add r0, r0, #1
+          
+          subs r1, r1, #1
+          bne zanka
+          
+          adr r0, rezultat
+          strh r2, [r0]
+__end:    b __end  
+
+3.
+
+
+            .text
+tabela:   .byte 192,155,224,48,0,128,99,147,177,123
+rezultat: .space 2
+          .align
+          .global __start
+__start: 
+          adr r0, tabela
+          mov r1, #0
+          mov r2, #10
+zanka:    ldrsb r3, [r0]
+          cmp r3, #100
+          addgt r1, r1, r3
+          add r0, r0, #1
+          
+          subs r2, r2, #1
+          bne zanka
+          
+          adr r0, rezultat
+          strh r1, [r0]
+__end:    b __end  
+
+
+
+4. 
+
+          .text
+niz:      .asciz "Outside is cold, wet and slippery." 
+          .align
+          .global __start
+__start: 
+          adr r0, niz
+          mov r1, #0
+zanka:    ldrb r2, [r0]
+
+          cmp r2, #0x20
+          addeq r1, r1, #1
+          
+          cmp r2, #0x0
+          add r0, r0, #1
+          bne zanka
+__end:    b __end
+
+5.
+
+          .text
+          
+TABELA:   .hword 1,100,-255,24,-88,31,56,192,155,-224,0,101,-199,47
+
+
+          .align
+          .global __start
+__start:
+                 mov r1, #-100
+                 mov r2, #100
+                 mov r3, #0     
+                 adr r0, TABELA
+                 mov r8, #0 
+                 mov r9, #14
+                 
+                 
+          
+ZANKA:
+                 cmp r8, r9
+                 beq konec
+                 ldrsh r4, [r0, r3]
+gor:             cmp r4, r1
+                 bge manjodsto
+                 add r3,r3,#2
+                 add r8, r8, #1
+                 b ZANKA
+           
+niclanastavi:    mov r4, #0
+                 strh r4, [r0, r3]
+                 add r3,r3,#2
+                 add r8, r8, #1
+                 b ZANKA
+                 
+                 
+manjodsto:       cmp r4, r2
+                 blt niclanastavi
+                 add r3,r3,#2
+                 b ZANKA
+                 
+konec:
+                 
+          
+                          
+
+__end:    b __end  

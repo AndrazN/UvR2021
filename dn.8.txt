@@ -1,0 +1,155 @@
+1. Napišite zaporedje ukazov v zbirniku za procesor ARM, ki izračuna izraz STEV1 = MAKS(STEV2, STEV3). Vse spremenljivke so 32-bitne in nepredznačene. Program preizkusite z različnimi vrednostmi STEV2 in STEV3. Uporabite pogojni skok. Program naj bo naslednje oblike:
+STEV1 = STEV2
+IF STEV2 > STEV3 THEN GOTO DALJE
+STEV1 = STEV3
+DALJE: …
+
+
+          .text
+          .align
+          
+stev1:    .word 0
+stev2:    .word 1
+stev3:    .word 2    
+
+          .align
+          .global __start
+__start:
+        adr r0, stev2
+        ldr r2, [r0]
+        
+        adr r0, stev3
+        ldr r3, [r0]
+        
+        mov r1,r2
+        cmp r2,r3
+        bhi DALJE
+        mov r1,r3
+        
+DALJE:  adr r0, stev1
+        str r1, [r0]
+
+
+__end:    b __end   
+
+
+2. Program iz prejšnje naloge predelajte tako, da bo ustrezal izrazu STEV1 = MIN(STEV2, STEV3).
+
+          .text
+          .align
+          
+stev1:    .word 0
+stev2:    .word 1  
+stev3:    .word 2    
+
+          .align
+          .global __start
+__start:
+        adr r0, stev2
+        ldr r2, [r0]
+        
+        adr r0, stev3
+        ldr r3, [r0]
+        
+        mov r1,r2
+        cmp r2,r3
+        blo DALJE
+        mov r1,r3
+        
+DALJE:  adr r0, stev1
+        str r1, [r0]
+
+
+__end:    b __end   
+
+3. Programa iz dveh prejšnjih nalog predelajte tako, da bosta iskala večje oziroma manjše število izmed dveh predznačenih spremenljivk. Programa preizkusite tudi s števili 1 in -1.
+a)
+          .text
+          .align
+          
+stev1:    .word 0
+stev2:    .word -1 
+stev3:    .word 1    
+
+          .align
+          .global __start
+__start:
+        adr r0, stev2
+        ldr r2, [r0]
+        
+        adr r0, stev3
+        ldr r3, [r0]
+        
+        mov r1,r2
+        cmp r2,r3
+        bgt DALJE
+        mov r1,r3
+        
+DALJE:  adr r0, stev1
+        str r1, [r0]
+
+
+__end:    b __end   
+
+b)
+          .text
+          .align
+          
+stev1:    .word 0
+stev2:    .word -1 
+stev3:    .word 1    
+
+          .align
+          .global __start
+__start:
+        adr r0, stev2
+        ldr r2, [r0]
+        
+        adr r0, stev3
+        ldr r3, [r0]
+        
+        mov r1,r2
+        cmp r2,r3
+        blt DALJE
+        mov r1,r3
+        
+DALJE:  adr r0, stev1
+        str r1, [r0]
+
+
+__end:    b __end   
+
+4. Napišite program za iskanje največjega skupnega delitelja dveh nepredznačenih števil s pomočjo Evklidovega algoritma. Uporabite pogojne skoke. Program naj bo oblike
+
+          .text
+          .align
+          
+stev1:    .word 105
+stev2:    .word 45  
+ 
+
+          .align
+          .global __start
+__start:
+        adr r0, stev1
+        ldr r1, [r0]
+        
+        adr r0, stev2
+        ldr r2, [r0]
+        
+ZANKA:
+        cmp r1,r2
+        BEQ L2
+        BLO L1
+        
+        sub r1, r1, r2
+        B ZANKA
+        
+L1:     sub r2, r2, r1
+        B ZANKA
+        
+L2:     
+        
+        
+__end:    b __end   
+

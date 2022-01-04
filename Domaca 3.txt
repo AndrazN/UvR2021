@@ -1,0 +1,66 @@
+1. Zapišite ukaz v zbirniku za procesor ARM, ki v register R1 naloži konstanto 128. 
+Uporabite takojšnje naslavljanje (ukaz MOV). Izpišite ustrezen strojni ukaz (32 – bitno število v šestnajstiški obliki). 
+Program izvajajte po korakih in opazujte vrednosti registrov r15(PC) in R1. 
+Kakšni sta njuni vrednosti na koncu programa?
+
+          .text
+__start:
+
+          mov r1, #128
+
+
+__end:    b __end 
+
+Stevec se poveca za 4 na vsaki operaciji.
+
+
+2. Zapišite ukaz(e) v zbirniku za procesor ARM, ki v register naloži vrednost spremenljivke:
+
+          .text
+
+stev1:    .word   0x12345678          
+stev2:    .byte   128
+          
+          .align       
+stev3:    .hword  0xF123       
+
+          .align
+          .global __start
+__start:
+          adr r0, stev1
+          ldr r1, [r0]
+          
+          adr r0, stev2
+          ldrb r1, [r0]
+          
+          adr r0, stev3
+          ldrh r1, [r0]
+
+
+__end:    b __end   
+
+
+3. Napišite zaporedje ukazov v zbirniku za procesor ARM, ki vrednost 32-bitne spremenljivke STEV1 prepiše v 32-bitno spremenljivko STEV2. 
+Nalogo rešite še za primer, če sta spremenljivki STEV1 in STEV2 8-bitni oziroma 16-bitni. 
+Vse primere rešite s posrednim (baznim) naslavljanjem brez odmika preko registra R0.
+
+          .text
+
+stev1:    .word 0x11223344
+stev2:    .space 4
+      
+
+          .align
+          .global __start
+__start:
+          adr r0, stev1
+          
+          ldr r1, [r0]
+          
+          adr r0, stev2
+          
+          str r1, [r0]
+          
+          
+
+__end:    b __end

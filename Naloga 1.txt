@@ -1,0 +1,24 @@
+1. naloga
+	mov r1, #128 --- 0XE3A01080
+	
+		r1 : na začetku 0, na koncu 0x80 = 128
+		r15 : na začetku 0x20, na koncu 0x24
+
+2. naloga
+	
+	          .text
+stev1: .word 0x12345678
+stev2: .byte 128
+        .align
+stev3: .hword 0xf123
+          .align
+          .global __start
+__start:
+     adr r0, stev1
+     ldr r1, [r0]
+     
+     adr r0, stev2
+     ldrb r1, [r0]
+     
+     adr r0, stev3
+     ldrh r1, [r0]
